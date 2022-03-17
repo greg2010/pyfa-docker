@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=2.0.0
+Encoding=UTF-8
+Name=Docker Pyfa
+Comment=Python Fitting Assistant
+Exec=PATHTO/pyfa-docker.sh
+Terminal=false
+Icon=pyfa-docker
+Type=Application
+Categories=Application;Game;
