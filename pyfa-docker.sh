@@ -1,8 +1,19 @@
 #!/usr/bin/sh
 
-CURRENT_VERSION="v2.40.0"
 
-echo "Starting pyfa-docker ${CURRENT_VERSION}..."
+# Get latest stable pyfa release
+PYFA_UPDATE_URL="https://www.pyfa.io/update_check"
+REMOTE_VERSION=$(curl -s $PYFA_UPDATE_URL | jq -c '[.[] | select(.prerelease == false)][0]["tag_name"]' | tr -d '"')
+echo "Latest pyfa release: $REMOTE_VERSION"
+
+
+CURRENT_VERSION=$REMOTE_VERSION
+# In case pyfa.io is down etc fallback to the latest known version
+if [ -z "${CURRENT_VERSION}" ]; then
+  CURRENT_VERSION="v2.40.0"
+fi
+
+echo "Starting pyfa-docker ${CURRENT_VERSION}"
 
 # Check if pyfa:$CURRENT_VERSION doesn't exist
 if [[ "$(docker images -q pyfa:$CURRENT_VERSION 2> /dev/null)" == "" ]]; then
