@@ -8,8 +8,11 @@ ARG TZ=America/New_York
 ARG PYFA_VERSION="v2.40.0"
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV BROWSER=/usr/bin/firefox
 
-RUN apt-get update && apt-get -q -y install libgtk-3-dev python3 python3-dev pkg-config curl python3-pip
+RUN apt-get update && \
+    apt-get -q -y install libgtk-3-dev python3 python3-dev pkg-config curl python3-pip \
+                  locales locales-all language-pack-en firefox
 RUN pip3 install pathlib2
 
 
@@ -26,7 +29,6 @@ RUN mkdir -p /usr/local/bin
 COPY pyfa /usr/local/bin/pyfa
 RUN chmod a+x /usr/local/bin/pyfa
 
-RUN apt-get -q -y install locales locales-all language-pack-en
 RUN locale-gen "en_US.UTF-8"
 RUN dpkg-reconfigure locales
 
